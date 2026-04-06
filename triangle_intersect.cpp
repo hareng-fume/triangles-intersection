@@ -64,13 +64,20 @@ namespace _Details
   using Vector2D = Vector<2>;
   using Vector3D = Vector<3>;
 
-  template <std::size_t NDim>
-  inline double Length(const Vector<NDim>& i_vec)
-  {
+	template <std::size_t NDim>
+	inline double LengthSquared(const Vector<NDim>& i_vec)
+	{
     auto sq_sum{0.0};
     for(std::size_t i = 0; i < NDim; ++i)
       sq_sum += i_vec.coords[i]*i_vec.coords[i];
-    return std::sqrt(sq_sum);
+	  return sq_sum;
+	}
+
+  template <std::size_t NDim>
+  inline double Length(const Vector<NDim>& i_vec)
+  {
+		auto len_squared = LengthSquared(i_vec);
+    return std::sqrt(len_squared);
   }
 
   template <std::size_t NDim>
@@ -181,6 +188,15 @@ namespace _Details
     auto n = CrossProduct(p2 - p1, p3 - p1);
     return Normalize(n);
   }
+
+  inline bool IsZeroArea(const Triangle3D& i_tr)
+  {
+		auto v1 = i_tr[1] - i_tr[0];
+		auto v2 = i_tr[2] - i_tr[0];
+
+		auto n = CrossProduct(v1, v2);
+		return Equal(LengthSquared(n), 0.0);
+	}
 
   struct Interval {double min, max;};
   inline bool Overlap(const Interval& i_i1, const Interval& i_i2)
