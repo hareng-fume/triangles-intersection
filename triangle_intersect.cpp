@@ -64,19 +64,19 @@ namespace _Details
   using Vector2D = Vector<2>;
   using Vector3D = Vector<3>;
 
-	template <std::size_t NDim>
-	inline double LengthSquared(const Vector<NDim>& i_vec)
-	{
+  template <std::size_t NDim>
+  inline double LengthSquared(const Vector<NDim>& i_vec)
+  {
     auto sq_sum{0.0};
     for(std::size_t i = 0; i < NDim; ++i)
       sq_sum += i_vec.coords[i]*i_vec.coords[i];
-	  return sq_sum;
-	}
+	return sq_sum;
+  }
 
   template <std::size_t NDim>
   inline double Length(const Vector<NDim>& i_vec)
   {
-		auto len_squared = LengthSquared(i_vec);
+    auto len_squared = LengthSquared(i_vec);
     return std::sqrt(len_squared);
   }
 
